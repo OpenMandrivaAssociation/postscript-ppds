@@ -43,7 +43,6 @@ Patch200: cups-drivers-hplj5m_4.ppd.patch
 
 ##### BUILD ROOT
 
-BuildRoot:	%_tmppath/%name-%version-%release-root
 
 
 
