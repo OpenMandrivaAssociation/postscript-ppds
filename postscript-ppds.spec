@@ -49,7 +49,6 @@ Patch200: cups-drivers-hplj5m_4.ppd.patch
 ##### PACKAGE DESCRIPTION
 
 %description
-
 This package contains PPD files for older PostScript printers.
 
 The PPD files for recent printers are in the foomatic-db package.
