@@ -1,5 +1,5 @@
 %define version 2006
-%define release %mkrel 7
+%define release %mkrel 8
 
 ##### RPM PROBLEM WORKAROUNDS
 
