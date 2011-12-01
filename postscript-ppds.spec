@@ -97,19 +97,19 @@ rm -f cups-drivers-0.3.6/usr/share/cups/model/hp/deskjet.ppd
 
 %install
 
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 # Make directories
-install -d $RPM_BUILD_ROOT%{_datadir}/cups/model
+install -d %{buildroot}%{_datadir}/cups/model
 
 # Put the Sourceforge PPDs into CUPS PPD directory
-cp -a cups-drivers-0.3.6/usr/share/cups/model/* $RPM_BUILD_ROOT%{_datadir}/cups/model/
+cp -a cups-drivers-0.3.6/usr/share/cups/model/* %{buildroot}%{_datadir}/cups/model/
 
 # Install PPD file for a generic PostScript printer
-bzcat %{SOURCE203} > $RPM_BUILD_ROOT%{_datadir}/cups/model/postscript.ppd
+bzcat %{SOURCE203} > %{buildroot}%{_datadir}/cups/model/postscript.ppd
 
 # Correct permissions of PPD file directory
-chmod -R u+w,a+rX $RPM_BUILD_ROOT%{_datadir}/cups/model
+chmod -R u+w,a+rX %{buildroot}%{_datadir}/cups/model
 
 # "cleanppd.pl" removes unwished PPD files (currently the ones for Birmy
 # PowerRIP), fixes broken manufacturer entries, and cleans lines which
@@ -119,10 +119,10 @@ chmod -R u+w,a+rX $RPM_BUILD_ROOT%{_datadir}/cups/model
 bzcat %{SOURCE201} > ./cleanppd.pl
 chmod a+rx ./cleanppd.pl
 # Do the clean-up
-find $RPM_BUILD_ROOT%{_datadir}/cups/model -name "*.ppd" -exec ./cleanppd.pl '{}' \;
+find %{buildroot}%{_datadir}/cups/model -name "*.ppd" -exec ./cleanppd.pl '{}' \;
 # Remove PPDs which are not Adobe-compliant and therefore not working with
 # CUPS 1.1.20
-for ppd in `find $RPM_BUILD_ROOT%{_datadir}/cups/model -name "*.ppd.gz" -print`; do cupstestppd -q $ppd || (rm -f $ppd && echo "$ppd not Adobe-compliant. Deleted."); done
+for ppd in `find %{buildroot}%{_datadir}/cups/model -name "*.ppd.gz" -print`; do cupstestppd -q $ppd || (rm -f $ppd && echo "$ppd not Adobe-compliant. Deleted."); done
 
 
 
@@ -156,7 +156,7 @@ done
 
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 
 
