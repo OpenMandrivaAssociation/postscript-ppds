@@ -63,8 +63,8 @@ PPD file automatically if one for your printer is found.
 
 %prep
 # remove old directory
-rm -rf $RPM_BUILD_DIR/%{name}-%{version}
-mkdir $RPM_BUILD_DIR/%{name}-%{version}
+rm -rf %{_builddir}/%{name}-%{version}
+mkdir %{_builddir}/%{name}-%{version}
 
 # PPD files for old PostScript printers
 %setup -q -T -D -a 200 -n %{name}-%{version}
