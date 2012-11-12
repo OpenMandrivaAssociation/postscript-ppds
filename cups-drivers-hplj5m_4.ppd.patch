@@ -1,0 +1,12 @@
+--- cups-drivers-0.3.6/usr/share/cups/model/hp/hplj5m_4.ppd.orig	Fri Aug 11 00:33:21 2000
++++ cups-drivers-0.3.6/usr/share/cups/model/hp/hplj5m_4.ppd	Fri Aug 11 00:34:23 2000
+@@ -10,7 +10,8 @@
+ *FormatVersion: "4.2"
+ *LanguageEncoding: ISOLatin1
+ *LanguageVersion: English
+-*ModelName: ""
++*Manufacturer: "HP"
++*ModelName: "HP LaserJet 5/5M PostScript"
+ *ShortNickName: "HP LaserJet 5/5M PostScript"
+ *NickName: "HP LaserJet 5/5M PostScript"
+ *PCFileName: "HPLJ5M_4.PPD"
