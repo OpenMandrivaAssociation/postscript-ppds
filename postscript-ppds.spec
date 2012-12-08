@@ -1,5 +1,5 @@
 %define version 2006
-%define release %mkrel 9
+%define release %mkrel 11
 
 ##### RPM PROBLEM WORKAROUNDS
 
@@ -63,8 +63,8 @@ PPD file automatically if one for your printer is found.
 
 %prep
 # remove old directory
-rm -rf %{_builddir}/%{name}-%{version}
-mkdir %{_builddir}/%{name}-%{version}
+rm -rf $RPM_BUILD_DIR/%{name}-%{version}
+mkdir $RPM_BUILD_DIR/%{name}-%{version}
 
 # PPD files for old PostScript printers
 %setup -q -T -D -a 200 -n %{name}-%{version}
@@ -97,19 +97,19 @@ rm -f cups-drivers-0.3.6/usr/share/cups/model/hp/deskjet.ppd
 
 %install
 
-rm -rf %{buildroot}
+rm -rf $RPM_BUILD_ROOT
 
 # Make directories
-install -d %{buildroot}%{_datadir}/cups/model
+install -d $RPM_BUILD_ROOT%{_datadir}/cups/model
 
 # Put the Sourceforge PPDs into CUPS PPD directory
-cp -a cups-drivers-0.3.6/usr/share/cups/model/* %{buildroot}%{_datadir}/cups/model/
+cp -a cups-drivers-0.3.6/usr/share/cups/model/* $RPM_BUILD_ROOT%{_datadir}/cups/model/
 
 # Install PPD file for a generic PostScript printer
-bzcat %{SOURCE203} > %{buildroot}%{_datadir}/cups/model/postscript.ppd
+bzcat %{SOURCE203} > $RPM_BUILD_ROOT%{_datadir}/cups/model/postscript.ppd
 
 # Correct permissions of PPD file directory
-chmod -R u+w,a+rX %{buildroot}%{_datadir}/cups/model
+chmod -R u+w,a+rX $RPM_BUILD_ROOT%{_datadir}/cups/model
 
 # "cleanppd.pl" removes unwished PPD files (currently the ones for Birmy
 # PowerRIP), fixes broken manufacturer entries, and cleans lines which
@@ -119,10 +119,10 @@ chmod -R u+w,a+rX %{buildroot}%{_datadir}/cups/model
 bzcat %{SOURCE201} > ./cleanppd.pl
 chmod a+rx ./cleanppd.pl
 # Do the clean-up
-find %{buildroot}%{_datadir}/cups/model -name "*.ppd" -exec ./cleanppd.pl '{}' \;
+find $RPM_BUILD_ROOT%{_datadir}/cups/model -name "*.ppd" -exec ./cleanppd.pl '{}' \;
 # Remove PPDs which are not Adobe-compliant and therefore not working with
 # CUPS 1.1.20
-for ppd in `find %{buildroot}%{_datadir}/cups/model -name "*.ppd.gz" -print`; do cupstestppd -q $ppd || (rm -f $ppd && echo "$ppd not Adobe-compliant. Deleted."); done
+for ppd in `find $RPM_BUILD_ROOT%{_datadir}/cups/model -name "*.ppd.gz" -print`; do cupstestppd -q $ppd || (rm -f $ppd && echo "$ppd not Adobe-compliant. Deleted."); done
 
 
 
@@ -156,7 +156,79 @@ done
 
 
 %clean
-rm -rf %{buildroot}
+rm -rf $RPM_BUILD_ROOT
 
 
+
+
+
+%changelog
+* Thu May 05 2011 Oden Eriksson <oeriksson@mandriva.com> 2006-9mdv2011.0
++ Revision: 667809
+- mass rebuild
+
+* Fri Dec 03 2010 Oden Eriksson <oeriksson@mandriva.com> 2006-8mdv2011.0
++ Revision: 607195
+- rebuild
+
+* Wed Mar 17 2010 Oden Eriksson <oeriksson@mandriva.com> 2006-7mdv2010.1
++ Revision: 523697
+- rebuilt for 2010.1
+
+* Thu Sep 03 2009 Christophe Fergeau <cfergeau@mandriva.com> 2006-6mdv2010.0
++ Revision: 426769
+- rebuild
+
+* Sat Mar 07 2009 Antoine Ginies <aginies@mandriva.com> 2006-5mdv2009.1
++ Revision: 351637
+- rebuild
+
+* Wed Jun 18 2008 Thierry Vignaud <tv@mandriva.org> 2006-4mdv2009.0
++ Revision: 225026
+- rebuild
+- kill extra spacing at top of description
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+* Mon Dec 17 2007 Thierry Vignaud <tv@mandriva.org> 2006-3mdv2008.1
++ Revision: 125577
+- kill re-definition of %%buildroot on Pixel's request
+
+
+* Mon Feb 27 2006 Till Kamppeter <till@mandriva.com> 2006-3mdk
+- Introduced %%mkrel.
+
+* Tue Oct 25 2005 Till Kamppeter <till@mandriva.com> 2006-2mdk
+- Removed the PPD files which are hosted at linuxprinting.org, they
+  are in the foomatic-db package now.
+
+* Wed Aug 03 2005 Till Kamppeter <till@mandriva.com> 2006-1mdk
+- Updated the PPD files of HP, Epson, Oce, and Ricoh to the state of
+  03/08/2005..
+- Added "BuildRequires:	cups-common" to have "cupstestppd" available.
+
+* Fri Apr 01 2005 Till Kamppeter <till@mandrakesoft.com> 10.2-1mdk
+- Updated Kyocera's PPD file to the state of 01/04/2005.
+
+* Fri Mar 04 2005 Till Kamppeter <till@mandrakesoft.com> 10.2-0.6mdk
+- Added PostScript PPD files from Sharp.
+
+* Fri Mar 04 2005 Till Kamppeter <till@mandrakesoft.com> 10.2-0.5mdk
+- More 162 PostScript PPD files from Ricoh (brands: Gestetner, Infotec,
+  Lanier, NRG, Ricoh, Savin).
+
+* Tue Feb 22 2005 Till Kamppeter <till@mandrakesoft.com> 10.2-0.4mdk
+- Added PostScript PPD files from Ricoh (brands: Gestetner, Infotec,
+  Lanier, NRG, Ricoh, Savin).
+- Updated HP's PPD file to the state of 22/02/2005.
+
+* Tue Feb 22 2005 Till Kamppeter <till@mandrakesoft.com> 10.2-0.3mdk
+- Updated HP's PPD file to the state of 21/02/2005.
+
+* Fri Feb 04 2005 Till Kamppeter <till@mandrakesoft.com> 10.2-0.2mdk
+- Removed unnecessary RPM workarounds.
+
+* Fri Feb 04 2005 Till Kamppeter <till@mandrakesoft.com> 10.2-0.1mdk
+- Introduced a separate package for PostScript PPD files.
 
