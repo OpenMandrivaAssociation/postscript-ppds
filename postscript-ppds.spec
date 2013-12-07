@@ -1,7 +1,7 @@
 Summary:	PPD files for PostScript printers
 Name:		postscript-ppds
 Version:	2006
-Release:	13
+Release:	14
 License:	Distributable
 Group:		Publishing
 Url:		http://cups.sourceforge.net/
