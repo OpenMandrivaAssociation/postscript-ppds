@@ -4,7 +4,7 @@ Version:	2006
 Release:	23
 License:	Distributable
 Group:		Publishing
-Url:		http://cups.sourceforge.net/
+Url:		https://cups.sourceforge.net/
 # CUPS-Drivers package from Sourceforge, only PPD files for native 
 # PostScript printers used
 Source200:	ftp://cups.sourceforge.net/pub/cups/cups-drivers/0.3.6/cups-drivers-all-0.3.6.tar.bz2
