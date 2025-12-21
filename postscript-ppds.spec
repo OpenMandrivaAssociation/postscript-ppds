@@ -15,6 +15,7 @@ Source201:	cleanppd.pl.bz2
 Source203:	postscript.ppd.bz2
 # Fix buggy PPD file
 Patch200:	cups-drivers-hplj5m_4.ppd.patch
+BuildRequires:	make
 BuildRequires:	cups-common
 Requires:	foomatic-filters
 Requires:	ghostscript
